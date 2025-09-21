@@ -1,0 +1,2 @@
+[console_scripts]
+rich-gradient = rich_gradient.cli:app
