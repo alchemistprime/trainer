@@ -1,4 +1,4 @@
-#!/home/devalpha/Develop/RAGs/trainer/.venv/bin/python3
+#!/home/devalpha/Develop/RAGs/trainer/.venv/bin/python
 """Extract pdf structure in XML format"""
 
 import logging

@@ -1,4 +1,4 @@
-#!/home/devalpha/Develop/RAGs/trainer/.venv/bin/python3
+#!/home/devalpha/Develop/RAGs/trainer/.venv/bin/python
 # -*- coding: utf-8 -*-
 import sys
 from charset_normalizer.cli import cli_detect

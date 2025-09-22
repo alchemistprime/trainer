@@ -1,4 +1,4 @@
-#!/home/devalpha/Develop/RAGs/trainer/.venv/bin/python3
+#!/home/devalpha/Develop/RAGs/trainer/.venv/bin/python
 # -*- coding: utf-8 -*-
 import sys
 from jsonschema.cli import main
