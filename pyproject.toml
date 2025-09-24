@@ -10,6 +10,7 @@ dependencies = [
     "glob2>=0.7",
     "llama-index>=0.14.2",
     "llama-index-embeddings-cohere>=0.6.1",
+    "llama-index-llms-anthropic>=0.8.6",
     "llama-index-llms-cohere>=0.6.1",
     "llama-index-storage-docstore-mongodb>=0.4.1",
     "llama-index-storage-kvstore-mongodb>=0.4.1",
