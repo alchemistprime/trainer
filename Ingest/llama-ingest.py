@@ -1,11 +1,10 @@
 import json
 import os
-import weaviate
 from dotenv import load_dotenv
 from llama_index.core import Document, VectorStoreIndex, StorageContext
 from llama_index.core.schema import TextNode
 from llama_index.embeddings.cohere import CohereEmbedding
-from llama_index.vector_stores.weaviate import WeaviateVectorStore
+from llama_index.vector_stores.lancedb import LanceDBVectorStore
 from llama_index.storage.docstore.mongodb import MongoDocumentStore
 from llama_index.core.query_engine import CitationQueryEngine
 from llama_index.llms.anthropic import Anthropic
@@ -22,7 +21,7 @@ if not ANTHROPIC_API_KEY:
     raise ValueError("ANTHROPIC_API_KEY environment variable not set.")
 
 # Load your JSON data
-with open("trainer_source_data_v1.json", "r", encoding="utf-8") as f:
+with open("./Ingest/trainer_source_data_v1.json", "r", encoding="utf-8") as f:
     data = json.load(f)
 
 # 2. Create TextNode objects with metadata
@@ -38,7 +37,6 @@ nodes = [
     for entry in data
 ]
 
-
 # Set up MongoDB docstore using from_uri
 docstore = MongoDocumentStore.from_uri(
     uri="mongodb://localhost:27017/",
@@ -47,10 +45,9 @@ docstore = MongoDocumentStore.from_uri(
 )
 docstore.add_documents(nodes)  # Store nodes in MongoDB
 
-# Set up Weaviate vector store
-client = weaviate.connect_to_local()
-vector_store = WeaviateVectorStore(weaviate_client=client, index_name="LlamaIndex")
-
+# Set up LanceDB vector store
+vector_store = LanceDBVectorStore(uri="./Data/lancedb_store", table_name="trainer_data",
+                                  mode="overwrite")
 
 # Set up Cohere embedding model
 embed_model = CohereEmbedding(
@@ -74,15 +71,12 @@ index = VectorStoreIndex(
 )
 
 # Set up Anthropic LLM for querying (use a supported model)
-llm = Anthropic(
-    api_key=ANTHROPIC_API_KEY,
-    model="claude-3-opus-20240229"
-)
-
-# Query engine
-query_engine = index.as_query_engine(llm=llm)
-response = query_engine.query("what is the first step in the Sales Process")
-print(response)
-
-
-
+#llm = Anthropic(
+#    api_key=ANTHROPIC_API_KEY,
+#    model="claude-3-opus-20240229"
+#)
+#
+## Query engine
+#query_engine = index.as_query_engine(llm=llm)
+#response = query_engine.query("what is the first step in the Sales Process")
+#print(response)
